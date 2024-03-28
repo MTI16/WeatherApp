@@ -7,7 +7,7 @@ export default function App() {
   const [input, setInput] = useState();
 
   useEffect(() => {
-    fetch(`http://api.weatherapi.com/v1/current.json?key=81c68d0d286348f4add222429240302 &q=${location}&aqi=no`, {mode: 'cors'})
+    fetch(`https://api.weatherapi.com/v1/current.json?key=81c68d0d286348f4add222429240302 &q=${location}&aqi=no`, {mode: 'cors'})
       .then(res => res.json())
       .then(data => setData(data));
   }, [location]);
