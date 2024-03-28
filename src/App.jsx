@@ -19,11 +19,11 @@ export default function App() {
 
   return(
     <>
-      <h1>Enter location</h1>
+      <h1>Weather App</h1>
       <input type="text" 
       value={input}
       onChange={e => setInput(e.target.value)}/>
-      <button onClick={handleClick}>submit</button>
+      <button onClick={handleClick}>Enter</button>
       {weatherData ? <p>{weatherData.current.temp_c}&#8451;</p> : (<p>loading</p>)}
       {weatherData ? <p>{weatherData.location.country}</p> : (<p>loading</p>)}
       {weatherData ? <p>{weatherData.location.region}</p> : (<p>loading</p>)}
