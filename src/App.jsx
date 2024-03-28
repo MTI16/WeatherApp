@@ -2,49 +2,33 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 export default function App() {
-  const [cords, setCords] = useState();
-  const [lat, setLat] = useState();
-  const [lon, setLon] = useState();
-  const [weatherData, setWeatherData] = useState();
+  const [location, setLocation] = useState('Schwerin')
+  const [weatherData, setData] = useState();
   const [input, setInput] = useState();
-  const [location, setLocation] = useState('Schwerin');
 
-  //get coordinates
   useEffect(() => {
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=edcc0651185666a6a14403d285a0f716`, {mode: 'cors',})
-    .then(res => res.json())
-    .then(data => setCords(data));
+    fetch(`http://api.weatherapi.com/v1/current.json?key=81c68d0d286348f4add222429240302 &q=${location}&aqi=no`, {mode: 'cors'})
+      .then(res => res.json())
+      .then(data => setData(data));
   }, [location]);
 
-  useEffect(() => {
-    if(cords) {
-      setLat(cords[0].lat);
-      setLon(cords[0].lon);
-    }
-  }, [cords]);
-
-  //get weather data
-  useEffect(() => {
-    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=current&units=metric&lang=de&appid=edcc0651185666a6a14403d285a0f716`, {mode: 'cors'})
-      .then(res => res.json())
-      .then(data => setWeatherData(data));
-  }, [lat, lon]);
-  
-  function handleInput() {
+  function handleClick() {
     setLocation(input);
     setInput('');
   }
 
   return(
     <>
-      <h1>Hello</h1>
+      <h1>Enter location</h1>
       <input type="text" 
       value={input}
       onChange={e => setInput(e.target.value)}/>
-      <button onClick={handleInput}>submit</button>
-      {lat ? (<p>{lat}</p>) : (<p>loading</p>)}
-      {lon ? (<p>{lon}</p>) : (<p>loading</p>)}
-      {weatherData ? (<p>{weatherData.daily[0].temp.day}</p>) : (<p>loading</p>)}
+      <button onClick={handleClick}>submit</button>
+      {weatherData ? <p>{weatherData.current.temp_c}&#8451;</p> : (<p>loading</p>)}
+      {weatherData ? <p>{weatherData.location.country}</p> : (<p>loading</p>)}
+      {weatherData ? <p>{weatherData.location.region}</p> : (<p>loading</p>)}
+      {weatherData ? <p>{weatherData.current.condition.text}</p> : (<p>loading</p>)}
+      {weatherData ? <img src={weatherData.current.condition.icon} alt="" /> : (<p>loading</p>)}
     </>
   );
 }
