@@ -19,16 +19,20 @@ export default function App() {
 
   return(
     <>
-      <h1>Weather App</h1>
-      <input type="text" 
-      value={input}
-      onChange={e => setInput(e.target.value)}/>
-      <button onClick={handleClick}>Enter</button>
-      {weatherData ? <p>{weatherData.current.temp_c}&#8451;</p> : (<p>loading</p>)}
-      {weatherData ? <p>{weatherData.location.country}</p> : (<p>loading</p>)}
-      {weatherData ? <p>{weatherData.location.region}</p> : (<p>loading</p>)}
-      {weatherData ? <p>{weatherData.current.condition.text}</p> : (<p>loading</p>)}
-      {weatherData ? <img src={weatherData.current.condition.icon} alt="" /> : (<p>loading</p>)}
+      <div className="input">
+        <h1 id='heading'>Weather App</h1>
+        <input type="text" 
+        value={input}
+        onChange={e => setInput(e.target.value)}/>
+        <button onClick={handleClick}>Enter</button>
+      </div>
+      <div className="weather">
+        {weatherData ? <h3 id='temp'>{weatherData.current.temp_c}&#8451;</h3> : (<p>loading</p>)}
+        {weatherData ? <p id='country'>{weatherData.location.country}</p> : (<p>loading</p>)}
+        {weatherData ? <p id='region'>{weatherData.location.region}</p> : (<p>loading</p>)}
+        {weatherData ? <p id='text'>{weatherData.current.condition.text}</p> : (<p>loading</p>)}
+        {weatherData ? <img src={weatherData.current.condition.icon} alt="" id='icon'/> : (<p>loading</p>)}
+      </div>
     </>
   );
 }
